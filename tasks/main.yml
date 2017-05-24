@@ -1,0 +1,22 @@
+---
+- debug:
+    msg: "I want to Test the integration inside {{project_to_integrate}}"
+
+- name: Download project from git
+  git:
+    repo: "{{project_to_integrate['repo_url']}}"
+    version:  "{{project_to_integrate['branch']}}"
+    dest: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}"
+
+- name: Link module inside project
+  command: npm link {{project_root_dir}}
+  args:
+    chdir: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}"
+
+- name: smild-ansible
+  include_role:
+    name: tierratelematics.smild-ansible
+  vars:
+    project_name: "{{project_to_integrate['project_name']}}"
+    project_root_dir: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}"
+    create_version_files: False
