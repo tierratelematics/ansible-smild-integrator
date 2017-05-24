@@ -1,0 +1,4 @@
+---
+project_root_dir: "{{playbook_dir}}/../"
+project_integration_test_dir: "{{playbook_dir}}/../repositories"
+integrator_file_path: "{{project_root_dir}}/integration.json"
