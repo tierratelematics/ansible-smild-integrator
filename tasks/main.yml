@@ -8,10 +8,22 @@
     version:  "{{project_to_integrate['branch']}}"
     dest: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}"
 
-- name: Link module inside project
-  command: npm link {{project_root_dir}}
+- name: Replace module uri inside package.json
+  json_file_replacer:
+    path: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}/package.json"
+    keyToFind: "{{project['project_name']}}"
+    valueToReplace: "git+{{project['repo_url']}}#{{project['branch']}}"
+    backup: True
+
+- name: Install libraries
+  command: npm install --silent
   args:
     chdir: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}"
+
+- name: Build package module
+  command: smild build
+  args:
+    chdir: "{{project_integration_test_dir}}/{{project_to_integrate['project_name']}}/node_modules/{{project['project_name']}}"
 
 - name: smild-ansible
   include_role:
