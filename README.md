@@ -15,11 +15,13 @@ Role Variables
     project_root_dir: "{{playbook_dir}}/../"                                                # the root path of project
     project_integration_test_dir: "{{playbook_dir}}/../repositories"                        # the path will contains the projects to test the integration
     project_to_integrate: null                                                              # Git parameters of project in which test the integration                                                
+    project: null                                                                           # Git parameters of project that you want to test                                               
 
 Dependencies
 ------------
 
-* [tierratelematics.smild-ansible](https://galaxy.ansible.com/tierratelematics/smild-ansible/)
+* [Ansible role - tierratelematics.smild-ansible](https://galaxy.ansible.com/tierratelematics/smild-ansible/)
+* [Ansible library - json_file_replacer](https://github.com/tierratelematics/ansible-json-file-replacer)
 
 Example Playbook
 ----------------
@@ -33,7 +35,12 @@ Example Playbook
                                      "project_name": "project-name",
                                      "repo_url": "git-url",
                                      "branch": "git-branch"
-                                  }
+                                  },
+            project: {
+                      "project_name": "project-name",
+                      "repo_url": "git-url",
+                      "branch": "git-branch"
+                   }
           }
 
 
